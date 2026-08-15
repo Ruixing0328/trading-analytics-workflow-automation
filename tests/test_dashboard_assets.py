@@ -63,3 +63,11 @@ def test_public_api_filters_synthetic_rows_without_private_fields() -> None:
     assert "notion_page_url" not in serialized
     assert "screenshot" not in serialized
     assert "account_label" not in serialized
+
+
+def test_vercel_root_resolves_to_the_clean_dashboard_route() -> None:
+    config = json.loads((PROJECT_ROOT / "vercel.json").read_text(encoding="utf-8"))
+
+    assert config["framework"] is None
+    assert {"source": "/", "destination": "/dashboard"} in config["rewrites"]
+    assert "crons" not in config

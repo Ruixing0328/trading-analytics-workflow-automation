@@ -3,7 +3,7 @@
 Workflow automation and analytics platform that validates journal data, synchronizes Notion with Supabase/PostgreSQL, and delivers recurring dashboard insights.
 
 [![CI](https://github.com/Ruixing0328/trading-analytics-workflow-automation/actions/workflows/ci.yml/badge.svg)](https://github.com/Ruixing0328/trading-analytics-workflow-automation/actions/workflows/ci.yml)
-[View the synthetic demo](https://trading-analytics-workflow-automation.vercel.app/)
+[View the synthetic demo](https://trading-analytics-workflow-automati.vercel.app/)
 
 ![Synthetic analytics dashboard showing workflow output, trends, and process breakdowns](docs/dashboard-demo.png)
 
