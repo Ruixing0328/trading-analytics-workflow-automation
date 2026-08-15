@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trading Analytics &amp; Workflow Automation Platform</title>
+    <link rel="stylesheet" href="/dashboard.css">
+  </head>
+  <body class="dashboard-mode">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <span class="brand-badge">Workflow Analytics</span>
+          <span class="brand-copy">Journal Automation Platform</span>
+        </div>
+        <div class="topbar-note">Data pipelines, integrations, recurring reporting, and decision support.</div>
+      </header>
+
+      <section class="dashboard-command">
+        <article class="command-panel">
+          <div class="command-header">
+            <div class="command-copy">
+              <p class="eyebrow">Automated analytics dashboard</p>
+              <h1 id="pulseHeadline">Workflow Analytics Dashboard</h1>
+              <p class="command-subhead" id="pulseSubhead">Loading the structured journal dataset...</p>
+            </div>
+            <div class="command-badges" id="pulseBadges"></div>
+          </div>
+
+          <div class="command-sparkline" id="pulseSparkline"></div>
+          <div class="command-metrics" id="pulseMetrics"></div>
+
+          <div class="command-insights">
+            <article class="command-note">
+              <span>Best</span>
+              <strong id="bestInsight">Loading pattern insights...</strong>
+            </article>
+            <article class="command-note warning">
+              <span>Leak</span>
+              <strong id="leakInsight">Loading leak notes...</strong>
+            </article>
+            <article class="command-note focus">
+              <span>Focus</span>
+              <strong id="focusInsight">Loading process insight...</strong>
+            </article>
+          </div>
+        </article>
+
+        <aside class="desk-panel">
+          <div class="desk-heading">
+            <p class="section-kicker">Pipeline status</p>
+            <h2>Data update console</h2>
+          </div>
+
+          <span class="mode-pill" id="sourceMode">Loading source...</span>
+          <strong id="syncTimestamp">Loading dataset...</strong>
+          <p id="sampleCaption">Preparing the synthetic portfolio dataset.</p>
+
+          <div class="desk-grid">
+            <div class="desk-item">
+              <span>Trades in view</span>
+              <strong id="deskTradesInView">—</strong>
+            </div>
+            <div class="desk-item">
+              <span>Current scope</span>
+              <strong id="deskScope">All journal records</strong>
+            </div>
+            <div class="desk-item">
+              <span>Profit factor</span>
+              <strong id="deskProfitFactor">—</strong>
+            </div>
+            <div class="desk-item">
+              <span>Max drawdown</span>
+              <strong id="deskDrawdown">—</strong>
+            </div>
+          </div>
+
+          <div class="desk-note">
+            <span>Review note</span>
+            <p id="reviewNote">Loading review note...</p>
+          </div>
+
+          <div class="desk-note warning">
+            <span>Risk note</span>
+            <p id="riskNote">Loading risk note...</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="panel filters-panel dashboard-filter-panel">
+        <div class="panel-heading dashboard-filter-heading">
+          <div>
+            <p class="section-kicker">Filter the dataset</p>
+            <h2>Analytics window</h2>
+          </div>
+        </div>
+
+        <div class="preset-chip-row" id="presetChips"></div>
+
+        <form id="filtersForm" class="filter-grid">
+          <label>
+            <span>Start date</span>
+            <input type="date" name="start_date" id="startDate">
+          </label>
+          <label>
+            <span>End date</span>
+            <input type="date" name="end_date" id="endDate">
+          </label>
+          <label>
+            <span>Instrument</span>
+            <select name="instrument" id="instrumentSelect">
+              <option value="">All instruments</option>
+            </select>
+          </label>
+          <label>
+            <span>Account</span>
+            <select name="account_type" id="accountTypeSelect">
+              <option value="">All accounts</option>
+            </select>
+          </label>
+          <label>
+            <span>Setup grade</span>
+            <select name="setup_grade" id="setupGradeSelect">
+              <option value="">All grades</option>
+            </select>
+          </label>
+          <label>
+            <span>Result</span>
+            <select name="result" id="resultSelect">
+              <option value="">All results</option>
+            </select>
+          </label>
+          <div class="filter-actions">
+            <button type="submit" class="button button-primary">Run analysis</button>
+            <button type="button" class="button button-secondary" id="resetFilters">Clear filters</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel recent-trade-panel">
+        <div class="panel-heading recent-trade-heading">
+          <div>
+            <p class="section-kicker">Latest record</p>
+            <h2>Most recent journal entry</h2>
+          </div>
+          <p class="section-note">A structured snapshot from the newest record in the current analysis scope.</p>
+        </div>
+        <div id="recentTradeSpotlight" class="recent-trade-spotlight">
+          <div class="empty-state">Loading the latest trade snapshot...</div>
+        </div>
+      </section>
+
+      <section class="dashboard-section">
+        <div class="panel-heading dashboard-section-heading">
+          <div>
+            <p class="section-kicker">Analytics summary</p>
+            <h2>Supporting stats</h2>
+          </div>
+        </div>
+        <div class="summary-grid" id="summaryGrid"></div>
+      </section>
+
+      <section class="feature-grid">
+        <article class="panel panel-wide">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Curve</p>
+              <h2>Equity curve</h2>
+            </div>
+            <p class="section-note" id="equityCaption">Loading chart...</p>
+          </div>
+          <div id="equityCurve" class="chart-card chart-line"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Decision support</p>
+              <h2>Automated insights</h2>
+            </div>
+          </div>
+          <div id="highlightsList" class="highlights-list"></div>
+        </article>
+      </section>
+
+      <section class="scorecards-grid">
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Review cadence</p>
+              <h2>Weekly breakdown</h2>
+            </div>
+            <p class="section-note">Recent weeks, ranked newest first so you can track momentum, pace, and drift.</p>
+          </div>
+          <div id="weeklyScorecards" class="scorecards-list"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Big picture</p>
+              <h2>Monthly breakdown</h2>
+            </div>
+            <p class="section-note">Calendar-month summaries make changes in outcomes and process quality easier to review.</p>
+          </div>
+          <div id="monthlyScorecards" class="scorecards-list"></div>
+        </article>
+      </section>
+
+      <section class="charts-grid">
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Playbook</p>
+              <h2>By instrument</h2>
+            </div>
+          </div>
+          <div id="instrumentChart" class="metric-bars"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Session breakdown</p>
+              <h2>By trade window</h2>
+            </div>
+          </div>
+          <div id="tradeWindowChart" class="metric-bars"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Setup quality</p>
+              <h2>By setup grade</h2>
+            </div>
+          </div>
+          <div id="setupGradeChart" class="metric-bars"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Execution state</p>
+              <h2>By emotional state</h2>
+            </div>
+          </div>
+          <div id="emotionChart" class="metric-bars"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Weekly rhythm</p>
+              <h2>Weekday performance</h2>
+            </div>
+          </div>
+          <div id="weekdayChart" class="metric-bars"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Risk behavior</p>
+              <h2>Discipline flags</h2>
+            </div>
+          </div>
+          <div id="disciplineChart" class="metric-bars"></div>
+        </article>
+      </section>
+
+      <section class="panel panel-table">
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">Trade replay queue</p>
+            <h2>Recent trades</h2>
+          </div>
+          <p class="section-note">Public demo rows are synthetic and contain no source-system links.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Trade</th>
+                <th>Date</th>
+                <th>Instrument</th>
+                <th>Result</th>
+                <th>P&amp;L</th>
+                <th>Setup</th>
+                <th>Window</th>
+                <th>Emotion</th>
+              </tr>
+            </thead>
+            <tbody id="recentTradesBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "functions": {
+    "api/dashboard-data.py": {
+      "maxDuration": 30,
+      "excludeFiles": "{.venv/**,.pytest_cache/**,.vercel/**,docs/**,examples/**,tests/**}"
+    },
+    "api/sync-supabase.py": {
+      "maxDuration": 300,
+      "excludeFiles": "{.venv/**,.pytest_cache/**,.vercel/**,dashboard/**,docs/**,examples/**,tests/**}"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/dashboard/index.html"
+    },
+    {
+      "source": "/dashboard.js",
+      "destination": "/dashboard/dashboard.js"
+    },
+    {
+      "source": "/dashboard.css",
+      "destination": "/dashboard/dashboard.css"
+    },
+    {
+      "source": "/base.css",
+      "destination": "/dashboard/base.css"
+    }
+  ]
+}

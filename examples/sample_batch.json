@@ -1,0 +1,32 @@
+{
+  "synthetic": true,
+  "trades": [
+    {
+      "trade_name": "Synthetic sample record 001",
+      "date": "2026-01-05",
+      "instrument": "MNQ",
+      "direction": "Long",
+      "account_type": "Papertrade",
+      "entry_time": "2026-01-05T09:42:00-05:00",
+      "exit_time": "2026-01-05T09:54:00-05:00",
+      "result": "Win",
+      "pnl": 40.0,
+      "realized_r": 0.67,
+      "setup_grade": "A"
+    },
+    {
+      "trade_name": "Synthetic sample record 002",
+      "date": "2026-01-07",
+      "instrument": "MES",
+      "direction": "Short",
+      "account_type": "Backtest",
+      "entry_time": "2026-01-07T10:12:00-05:00",
+      "exit_time": "2026-01-07T10:25:00-05:00",
+      "result": "Loss",
+      "pnl": -35.0,
+      "realized_r": -0.5,
+      "setup_grade": "B",
+      "forced_trade": true
+    }
+  ]
+}

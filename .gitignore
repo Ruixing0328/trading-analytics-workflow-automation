@@ -1,0 +1,50 @@
+# Operating-system and editor files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Local tooling and deployment state
+.local-node/
+.vercel/
+.coverage
+htmlcov/
+coverage.xml
+dist/
+build/
+
+# Generated/private inputs and exports
+generated/
+data/
+exports/
+imports/
+*.csv
+*.xls
+*.xlsx
+*.parquet
+*.db
+*.sqlite
+*.sqlite3
+*.zip
+*.tar
+*.tar.gz
+*.log
+
+# Local caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+__pycache__/
+*.egg-info/
+*.pyc
+*.pyo
+*.pyd

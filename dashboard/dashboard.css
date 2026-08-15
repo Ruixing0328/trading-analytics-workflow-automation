@@ -1,0 +1,1133 @@
+@import "/base.css";
+
+.dashboard-mode {
+  background:
+    radial-gradient(circle at 14% 10%, rgba(255, 255, 255, 0.045), transparent 18rem),
+    radial-gradient(circle at 88% 12%, rgba(77, 227, 210, 0.06), transparent 18rem),
+    radial-gradient(circle at 82% 78%, rgba(243, 179, 77, 0.06), transparent 16rem),
+    linear-gradient(180deg, #090909 0%, #050506 34%, #010101 100%);
+}
+
+.dashboard-mode::before {
+  background-image:
+    linear-gradient(rgba(116, 143, 185, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(116, 143, 185, 0.06) 1px, transparent 1px),
+    linear-gradient(transparent 0, transparent 78%, rgba(77, 227, 210, 0.08) 100%);
+  background-size: 64px 64px, 64px 64px, 100% 100%;
+}
+
+.dashboard-mode::after {
+  background:
+    radial-gradient(circle at 76% 6%, rgba(90, 166, 255, 0.08), transparent 24rem),
+    radial-gradient(circle at 18% 90%, rgba(44, 207, 143, 0.06), transparent 22rem),
+    repeating-linear-gradient(90deg, transparent 0 34px, rgba(141, 177, 236, 0.025) 34px 35px),
+    linear-gradient(180deg, transparent 0%, rgba(77, 227, 210, 0.03) 100%);
+  opacity: 0.7;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 96%);
+}
+
+.dashboard-mode .page-shell {
+  padding-top: 18px;
+}
+
+.dashboard-mode .ambient-one {
+  animation: dashboard-float-one 18s ease-in-out infinite;
+}
+
+.dashboard-mode .ambient-two {
+  animation: dashboard-float-two 22s ease-in-out infinite;
+}
+
+.dashboard-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding: 14px 18px;
+  border: 1px solid rgba(77, 227, 210, 0.22);
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, rgba(9, 26, 38, 0.88), rgba(5, 9, 18, 0.94)),
+    linear-gradient(90deg, rgba(77, 227, 210, 0.08), rgba(90, 166, 255, 0.08));
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+}
+
+.dashboard-banner div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--ink-soft);
+}
+
+.dashboard-banner strong {
+  color: var(--ink-strong);
+}
+
+.dashboard-banner a {
+  color: var(--ink-strong);
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(90, 166, 255, 0.28);
+  background: rgba(90, 166, 255, 0.12);
+  transition: background 160ms ease, transform 160ms ease, border-color 160ms ease;
+}
+
+.dashboard-banner a:hover {
+  background: rgba(90, 166, 255, 0.22);
+  border-color: rgba(90, 166, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.dashboard-mode .topbar {
+  margin-bottom: 20px;
+}
+
+.dashboard-mode .brand-badge {
+  border-color: rgba(77, 227, 210, 0.28);
+  background: rgba(6, 25, 24, 0.72);
+  box-shadow: 0 0 0 1px rgba(77, 227, 210, 0.08), 0 16px 36px rgba(0, 0, 0, 0.26);
+}
+
+.dashboard-command,
+.dashboard-section {
+  margin-bottom: 22px;
+}
+
+.dashboard-command {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.75fr);
+  gap: 22px;
+}
+
+.command-panel,
+.desk-panel,
+.dashboard-section,
+.dashboard-filter-panel {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.command-panel,
+.desk-panel {
+  border-radius: 34px;
+  padding: 24px;
+  border: 1px solid rgba(141, 177, 236, 0.11);
+  background:
+    linear-gradient(180deg, rgba(11, 11, 13, 0.94), rgba(3, 3, 5, 0.92)),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(141, 177, 236, 0.022) 31px 32px),
+    linear-gradient(180deg, transparent 0 86%, rgba(77, 227, 210, 0.025) 100%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 42%);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+}
+
+.command-panel::before,
+.desk-panel::before,
+.dashboard-filter-panel::before,
+.dashboard-section::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(141, 177, 236, 0.24), transparent);
+}
+
+.command-panel::after {
+  content: "";
+  position: absolute;
+  inset: auto -8% -35% auto;
+  width: 28rem;
+  height: 28rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(90, 166, 255, 0.14), transparent 58%),
+    radial-gradient(circle at 35% 35%, rgba(77, 227, 210, 0.08), transparent 44%);
+  pointer-events: none;
+}
+
+.command-panel .eyebrow,
+.dashboard-filter-panel .section-kicker,
+.desk-panel .section-kicker {
+  text-shadow: 0 0 14px rgba(90, 166, 255, 0.18);
+}
+
+.command-header,
+.dashboard-filter-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: start;
+}
+
+.command-copy,
+.command-badges,
+.command-sparkline,
+.command-metrics,
+.command-insights,
+.desk-grid,
+.desk-note {
+  position: relative;
+  z-index: 1;
+}
+
+.command-copy h1 {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(2.2rem, 3.8vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--ink-strong);
+  max-width: 12ch;
+}
+
+.command-subhead {
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  max-width: 52ch;
+}
+
+.command-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 8px;
+  max-width: 24rem;
+}
+
+.command-badge,
+.preset-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(141, 177, 236, 0.14);
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--ink);
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.command-badge.positive::before,
+.command-badge.negative::before,
+.preset-chip.active::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.command-badge.positive::before,
+.preset-chip.active::before {
+  background: var(--teal);
+  box-shadow: 0 0 0 6px rgba(44, 207, 143, 0.1);
+}
+
+.command-badge.negative::before {
+  background: var(--rose);
+  box-shadow: 0 0 0 6px rgba(255, 111, 143, 0.1);
+}
+
+.command-badge::after,
+.preset-chip::after,
+.dashboard-mode .button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0 34%, rgba(255, 255, 255, 0.18) 50%, transparent 66%);
+  transform: translateX(-135%);
+  transition: transform 420ms ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.command-badge:hover::after,
+.preset-chip:hover::after,
+.dashboard-mode .button:hover::after {
+  transform: translateX(135%);
+}
+
+.command-sparkline {
+  position: relative;
+  overflow: hidden;
+  margin: 22px 0 18px;
+  min-height: 132px;
+  border-radius: 24px;
+  padding: 10px;
+  border: 1px solid rgba(141, 177, 236, 0.08);
+  background:
+    linear-gradient(180deg, rgba(6, 10, 16, 0.92), rgba(2, 4, 8, 0.9)),
+    linear-gradient(90deg, rgba(90, 166, 255, 0.05), rgba(77, 227, 210, 0.04));
+}
+
+.command-sparkline::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 18px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 23px, rgba(255, 255, 255, 0.02) 23px 24px),
+    linear-gradient(180deg, transparent 0 70%, rgba(255, 111, 143, 0.04) 70% 71%, transparent 71% 100%);
+  pointer-events: none;
+}
+
+.mini-sparkline {
+  width: 100%;
+  height: 108px;
+}
+
+.mini-sparkline .sparkline-grid {
+  stroke: rgba(141, 177, 236, 0.12);
+  stroke-width: 1;
+}
+
+.mini-sparkline .sparkline-fill {
+  fill: rgba(90, 166, 255, 0.12);
+}
+
+.mini-sparkline .sparkline-line {
+  fill: none;
+  stroke: #8fd9ff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 16px rgba(90, 166, 255, 0.32));
+}
+
+.mini-sparkline .sparkline-baseline {
+  stroke: rgba(243, 179, 77, 0.28);
+  stroke-dasharray: 4 4;
+}
+
+.mini-sparkline .sparkline-end {
+  fill: #07111f;
+  stroke: var(--cyan);
+  stroke-width: 2;
+}
+
+.command-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  overflow: visible;
+}
+
+.command-metric {
+  position: relative;
+  padding: 14px 15px;
+  border-radius: 18px;
+  border: 1px solid rgba(141, 177, 236, 0.08);
+  background:
+    linear-gradient(180deg, rgba(16, 16, 20, 0.78), rgba(6, 6, 8, 0.9)),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 44%);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  animation: dashboard-card-fade 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: center center;
+  isolation: isolate;
+}
+
+.command-metric::before,
+.dashboard-mode .summary-card::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(90, 166, 255, 0.22), rgba(255, 255, 255, 0));
+}
+
+.command-metric.positive,
+.dashboard-mode .summary-card.positive {
+  box-shadow:
+    inset 0 0 0 1px rgba(44, 207, 143, 0.08),
+    0 0 0 1px rgba(44, 207, 143, 0.04),
+    0 16px 34px rgba(7, 28, 22, 0.28);
+}
+
+.command-metric.negative,
+.dashboard-mode .summary-card.negative {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 111, 143, 0.08),
+    0 0 0 1px rgba(255, 111, 143, 0.04),
+    0 16px 34px rgba(38, 12, 20, 0.24);
+}
+
+.command-metric.positive::before,
+.dashboard-mode .summary-card.positive::before {
+  background: linear-gradient(90deg, rgba(44, 207, 143, 0.8), rgba(44, 207, 143, 0));
+}
+
+.command-metric.negative::before,
+.dashboard-mode .summary-card.negative::before {
+  background: linear-gradient(90deg, rgba(255, 111, 143, 0.8), rgba(255, 111, 143, 0));
+}
+
+.command-metric span,
+.desk-item span,
+.desk-note span {
+  display: block;
+  color: var(--ink-faint);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.command-metric strong {
+  display: block;
+  color: var(--ink-strong);
+  font-size: 1.2rem;
+  line-height: 1.2;
+  animation: dashboard-value-pop 420ms ease both;
+}
+
+.command-metric p {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.command-metric.positive strong,
+.desk-item.positive strong {
+  color: var(--teal);
+  text-shadow: 0 0 14px rgba(44, 207, 143, 0.14);
+}
+
+.command-metric.negative strong,
+.desk-item.negative strong {
+  color: var(--rose);
+  text-shadow: 0 0 14px rgba(255, 111, 143, 0.14);
+}
+
+.command-insights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.command-note,
+.desk-note,
+.desk-item {
+  padding: 14px 15px;
+  border-radius: 18px;
+  border: 1px solid rgba(141, 177, 236, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.command-note strong {
+  display: block;
+  color: var(--ink-strong);
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+.command-note.warning strong,
+.desk-note.warning p {
+  color: #ffc4cf;
+}
+
+.command-note.focus strong {
+  color: #bfe9ff;
+}
+
+.desk-panel {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.desk-heading h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.desk-panel > strong {
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.desk-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.desk-item strong {
+  display: block;
+  color: var(--ink-strong);
+  font-size: 1rem;
+  line-height: 1.45;
+  animation: dashboard-value-pop 420ms ease both;
+}
+
+.desk-note p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.dashboard-filter-panel {
+  background:
+    linear-gradient(180deg, rgba(11, 11, 13, 0.94), rgba(3, 3, 5, 0.92)),
+    linear-gradient(90deg, rgba(90, 166, 255, 0.04), rgba(77, 227, 210, 0.03));
+}
+
+.preset-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.preset-chip {
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.preset-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(90, 166, 255, 0.24);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.preset-chip.active {
+  border-color: rgba(44, 207, 143, 0.24);
+  background: rgba(44, 207, 143, 0.12);
+  box-shadow: 0 10px 24px rgba(44, 207, 143, 0.14);
+}
+
+.dashboard-mode .filter-grid input,
+.dashboard-mode .filter-grid select,
+.dashboard-mode .button {
+  min-height: 42px;
+  background: rgba(255, 255, 255, 0.035);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-mode .button-primary {
+  background: linear-gradient(135deg, rgba(238, 244, 255, 0.96), rgba(77, 227, 210, 0.88));
+}
+
+.dashboard-mode .button:hover,
+.dashboard-banner a:hover {
+  box-shadow:
+    0 16px 34px rgba(9, 21, 38, 0.36),
+    0 0 0 1px rgba(90, 166, 255, 0.12);
+}
+
+.recent-trade-panel {
+  margin-bottom: 22px;
+  background:
+    linear-gradient(180deg, rgba(11, 11, 13, 0.94), rgba(3, 3, 5, 0.92)),
+    linear-gradient(90deg, rgba(90, 166, 255, 0.04), rgba(77, 227, 210, 0.03));
+}
+
+.recent-trade-panel::after {
+  content: "";
+  position: absolute;
+  inset: auto -6% -55% auto;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(90, 166, 255, 0.16), transparent 58%),
+    radial-gradient(circle at 35% 35%, rgba(77, 227, 210, 0.08), transparent 42%);
+  pointer-events: none;
+}
+
+.recent-trade-spotlight {
+  position: relative;
+  z-index: 1;
+}
+
+.recent-trade-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+  gap: 18px;
+  align-items: stretch;
+  padding: 20px;
+  border-radius: 26px;
+  border: 1px solid rgba(141, 177, 236, 0.1);
+  background:
+    linear-gradient(180deg, rgba(10, 12, 16, 0.9), rgba(4, 5, 8, 0.92)),
+    repeating-linear-gradient(90deg, transparent 0 30px, rgba(141, 177, 236, 0.02) 30px 31px),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 42%);
+  animation: dashboard-card-rise 560ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.recent-trade-shell.positive {
+  box-shadow:
+    inset 0 0 0 1px rgba(44, 207, 143, 0.08),
+    0 0 0 1px rgba(44, 207, 143, 0.04),
+    0 18px 40px rgba(7, 28, 22, 0.22);
+}
+
+.recent-trade-shell.negative {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 111, 143, 0.08),
+    0 0 0 1px rgba(255, 111, 143, 0.04),
+    0 18px 40px rgba(38, 12, 20, 0.22);
+}
+
+.recent-trade-copy,
+.recent-trade-stats {
+  position: relative;
+  z-index: 1;
+}
+
+.recent-trade-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.recent-trade-status,
+.recent-trade-date {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(141, 177, 236, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.recent-trade-status.positive {
+  color: var(--teal);
+  border-color: rgba(44, 207, 143, 0.2);
+  box-shadow: 0 0 0 1px rgba(44, 207, 143, 0.05);
+}
+
+.recent-trade-status.negative {
+  color: var(--rose);
+  border-color: rgba(255, 111, 143, 0.2);
+  box-shadow: 0 0 0 1px rgba(255, 111, 143, 0.05);
+}
+
+.recent-trade-copy h3 {
+  margin: 0 0 10px;
+  color: var(--ink-strong);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(1.8rem, 2.6vw, 2.7rem);
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+
+.recent-trade-meta,
+.recent-trade-note {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.recent-trade-meta {
+  font-size: 0.94rem;
+  margin-bottom: 12px;
+}
+
+.recent-trade-note {
+  max-width: 64ch;
+  line-height: 1.65;
+}
+
+.recent-trade-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-content: start;
+}
+
+.recent-trade-stat {
+  padding: 14px 15px;
+  border-radius: 18px;
+  border: 1px solid rgba(141, 177, 236, 0.08);
+  background:
+    linear-gradient(180deg, rgba(16, 16, 20, 0.78), rgba(6, 6, 8, 0.9)),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 44%);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  animation: dashboard-card-rise 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.recent-trade-stat:hover {
+  transform: translateY(-3px);
+  border-color: rgba(90, 166, 255, 0.18);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+}
+
+.recent-trade-stat span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ink-faint);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.recent-trade-stat strong {
+  display: block;
+  color: var(--ink-strong);
+  font-size: 1rem;
+  line-height: 1.4;
+  animation: dashboard-value-pop 420ms ease both;
+}
+
+.recent-trade-stat.positive strong {
+  color: var(--teal);
+  text-shadow: 0 0 14px rgba(44, 207, 143, 0.16);
+}
+
+.recent-trade-stat.negative strong {
+  color: var(--rose);
+  text-shadow: 0 0 14px rgba(255, 111, 143, 0.16);
+}
+
+.dashboard-section-heading {
+  margin-bottom: 16px;
+}
+
+.dashboard-mode .summary-card,
+.dashboard-mode .desk-item,
+.dashboard-mode .desk-note,
+.dashboard-mode .command-note,
+.dashboard-mode .metric-row,
+.dashboard-mode .highlight-card,
+.dashboard-mode .scorecard-card,
+.dashboard-mode .scorecard-stat,
+.dashboard-mode .scorecard-note,
+.dashboard-mode .recent-trade-stat,
+.dashboard-mode tbody td {
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.dashboard-mode .command-metric,
+.dashboard-mode .command-note,
+.dashboard-mode .desk-item,
+.dashboard-mode .desk-note,
+.dashboard-mode .summary-card,
+.dashboard-mode .recent-trade-stat,
+.dashboard-mode .highlight-card,
+.dashboard-mode .scorecard-card,
+.dashboard-mode .scorecard-stat,
+.dashboard-mode .scorecard-note,
+.dashboard-mode .metric-row {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.dashboard-mode .command-metric,
+.dashboard-mode .summary-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --glare-x: 50%;
+  --glare-y: 18%;
+}
+
+.dashboard-mode .command-metric > *,
+.dashboard-mode .command-note > *,
+.dashboard-mode .desk-item > *,
+.dashboard-mode .desk-note > *,
+.dashboard-mode .summary-card > *,
+.dashboard-mode .recent-trade-stat > *,
+.dashboard-mode .highlight-card > *,
+.dashboard-mode .scorecard-card > *,
+.dashboard-mode .scorecard-stat > *,
+.dashboard-mode .scorecard-note > *,
+.dashboard-mode .metric-row > * {
+  position: relative;
+  z-index: 1;
+  transform: translateZ(0);
+  transition: transform 220ms ease;
+}
+
+.dashboard-mode .command-metric::after,
+.dashboard-mode .command-note::after,
+.dashboard-mode .desk-item::after,
+.dashboard-mode .desk-note::after,
+.dashboard-mode .summary-card::after,
+.dashboard-mode .recent-trade-stat::after,
+.dashboard-mode .highlight-card::after,
+.dashboard-mode .scorecard-card::before,
+.dashboard-mode .scorecard-stat::after,
+.dashboard-mode .scorecard-note::after,
+.dashboard-mode .metric-row::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(184, 219, 255, 0.12), transparent 58%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+
+.dashboard-mode .command-metric:hover,
+.dashboard-mode .command-note:hover,
+.dashboard-mode .desk-item:hover,
+.dashboard-mode .desk-note:hover,
+.dashboard-mode .recent-trade-stat:hover,
+.dashboard-mode .highlight-card:hover,
+.dashboard-mode .scorecard-stat:hover,
+.dashboard-mode .scorecard-note:hover,
+.dashboard-mode .metric-row:hover {
+  transform: perspective(1200px) translateY(-8px) scale(1.024) rotateX(7deg) rotateY(-7deg);
+  border-color: rgba(90, 166, 255, 0.2);
+  box-shadow:
+    0 28px 52px rgba(0, 0, 0, 0.26),
+    0 0 0 1px rgba(90, 166, 255, 0.08),
+    0 0 24px rgba(90, 166, 255, 0.08);
+}
+
+.dashboard-mode .command-note:nth-child(even):hover,
+.dashboard-mode .command-metric:nth-child(even):hover,
+.dashboard-mode .desk-item:nth-child(even):hover,
+.dashboard-mode .desk-note:nth-child(even):hover,
+.dashboard-mode .recent-trade-stat:nth-child(even):hover,
+.dashboard-mode .highlight-card:nth-child(even):hover,
+.dashboard-mode .scorecard-stat:nth-child(even):hover,
+.dashboard-mode .scorecard-note:nth-child(even):hover,
+.dashboard-mode .metric-row:nth-child(even):hover {
+  transform: perspective(1200px) translateY(-8px) scale(1.024) rotateX(7deg) rotateY(7deg);
+}
+
+.dashboard-mode .command-metric:hover > *,
+.dashboard-mode .command-note:hover > *,
+.dashboard-mode .desk-item:hover > *,
+.dashboard-mode .desk-note:hover > *,
+.dashboard-mode .recent-trade-stat:hover > *,
+.dashboard-mode .highlight-card:hover > *,
+.dashboard-mode .scorecard-stat:hover > *,
+.dashboard-mode .scorecard-note:hover > *,
+.dashboard-mode .metric-row:hover > * {
+  transform: translateZ(18px);
+}
+
+.dashboard-mode .command-metric:hover::after,
+.dashboard-mode .command-note:hover::after,
+.dashboard-mode .desk-item:hover::after,
+.dashboard-mode .desk-note:hover::after,
+.dashboard-mode .recent-trade-stat:hover::after,
+.dashboard-mode .highlight-card:hover::after,
+.dashboard-mode .scorecard-stat:hover::after,
+.dashboard-mode .scorecard-note:hover::after,
+.dashboard-mode .metric-row:hover::after {
+  opacity: 1;
+}
+
+.dashboard-mode .scorecard-card:hover {
+  transform: translateY(-3px) scale(1.008);
+  border-color: rgba(90, 166, 255, 0.16);
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(90, 166, 255, 0.06);
+}
+
+.dashboard-mode .scorecard-card:hover::before {
+  opacity: 1;
+}
+
+.dashboard-mode .summary-card {
+  position: relative;
+  animation: dashboard-card-fade 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.dashboard-mode .summary-card:hover {
+  transform: perspective(1200px) translateY(-5px) scale(1.015) rotateX(4deg) rotateY(-4deg);
+  border-color: rgba(90, 166, 255, 0.14);
+  box-shadow:
+    0 20px 38px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(90, 166, 255, 0.04);
+}
+
+.dashboard-mode .summary-card:nth-child(even):hover {
+  transform: perspective(1200px) translateY(-5px) scale(1.015) rotateX(4deg) rotateY(4deg);
+}
+
+.dashboard-mode .summary-card:hover > * {
+  transform: translateZ(12px);
+}
+
+.dashboard-mode .summary-card:hover::after {
+  opacity: 0.42;
+}
+
+.dashboard-mode .summary-value {
+  animation: dashboard-value-pop 420ms ease both;
+}
+
+.dashboard-mode .summary-card.positive .summary-value,
+.dashboard-mode .money.positive,
+.dashboard-mode .metric-value.positive {
+  text-shadow: 0 0 14px rgba(44, 207, 143, 0.16);
+}
+
+.dashboard-mode .summary-card.negative .summary-value,
+.dashboard-mode .money.negative,
+.dashboard-mode .metric-value.negative {
+  text-shadow: 0 0 14px rgba(255, 111, 143, 0.16);
+}
+
+.dashboard-mode .metric-bar {
+  transform-origin: left center;
+  transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease;
+  animation: dashboard-bar-grow 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.dashboard-mode .metric-row:hover {
+  transform: perspective(1200px) translateY(-8px) scale(1.024) rotateX(7deg) rotateY(-7deg);
+  border-color: rgba(90, 166, 255, 0.16);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+}
+
+.dashboard-mode .metric-row:nth-child(even):hover {
+  transform: perspective(1200px) translateY(-8px) scale(1.024) rotateX(7deg) rotateY(7deg);
+}
+
+.dashboard-mode .metric-row:hover .metric-bar {
+  transform: scaleX(1.02);
+  filter: saturate(1.12) brightness(1.08);
+}
+
+.dashboard-mode .chart-card {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(7, 9, 13, 0.96), rgba(2, 4, 7, 0.9)),
+    radial-gradient(circle at top right, rgba(77, 227, 210, 0.08), transparent 44%);
+}
+
+.dashboard-mode .chart-card::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 20px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 24px, rgba(141, 177, 236, 0.028) 24px 25px),
+    linear-gradient(180deg, transparent 0 82%, rgba(255, 255, 255, 0.03) 82% 83%, transparent 83% 100%);
+  pointer-events: none;
+}
+
+.dashboard-mode .chart-line-path {
+  animation: dashboard-line-breathe 6s ease-in-out infinite;
+}
+
+.dashboard-mode .chart-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 180ms ease, filter 180ms ease, stroke 180ms ease;
+}
+
+.dashboard-mode .chart-dot:hover {
+  transform: scale(1.35);
+  filter: drop-shadow(0 0 10px rgba(243, 179, 77, 0.28));
+  stroke: #ffd889;
+}
+
+.dashboard-mode .metric-row,
+.dashboard-mode .scorecard-card,
+.dashboard-mode .highlight-card {
+  border-color: rgba(141, 177, 236, 0.1);
+}
+
+.dashboard-mode .highlight-card {
+  background:
+    linear-gradient(180deg, rgba(12, 14, 18, 0.82), rgba(5, 7, 10, 0.92)),
+    radial-gradient(circle at top right, rgba(77, 227, 210, 0.08), transparent 40%);
+}
+
+.dashboard-mode tbody td {
+  background: transparent;
+}
+
+.dashboard-mode tbody tr:hover td {
+  background: rgba(90, 166, 255, 0.035);
+}
+
+.dashboard-mode tbody tr:hover td:first-child {
+  box-shadow: inset 3px 0 0 rgba(77, 227, 210, 0.6);
+}
+
+.dashboard-mode tbody a {
+  transition: color 160ms ease, text-shadow 160ms ease;
+}
+
+.dashboard-mode tbody a:hover {
+  text-shadow: 0 0 10px rgba(184, 219, 255, 0.18);
+}
+
+.compact-empty {
+  width: 100%;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  color: var(--ink-soft);
+  border: 1px dashed rgba(141, 177, 236, 0.18);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+@keyframes dashboard-card-rise {
+  from {
+    opacity: 0.75;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dashboard-value-pop {
+  from {
+    opacity: 0.72;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dashboard-card-fade {
+  from {
+    opacity: 0.72;
+    filter: saturate(0.88) brightness(0.94);
+  }
+
+  to {
+    opacity: 1;
+    filter: saturate(1) brightness(1);
+  }
+}
+
+@keyframes dashboard-metric-shadow-pop {
+  0% {
+    box-shadow:
+      0 18px 30px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(90, 166, 255, 0.04),
+      0 0 8px rgba(90, 166, 255, 0.02);
+  }
+
+  60% {
+    box-shadow:
+      0 42px 78px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(90, 166, 255, 0.14),
+      0 0 34px rgba(90, 166, 255, 0.16);
+  }
+
+  100% {
+    box-shadow:
+      0 34px 62px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(90, 166, 255, 0.1),
+      0 0 28px rgba(90, 166, 255, 0.12);
+  }
+}
+
+@keyframes dashboard-bar-grow {
+  from {
+    transform: scaleX(0.7);
+    opacity: 0.6;
+  }
+
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes dashboard-line-breathe {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 16px rgba(90, 166, 255, 0.26));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 22px rgba(90, 166, 255, 0.4));
+  }
+}
+
+@keyframes dashboard-float-one {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-12px, 18px, 0) scale(1.04);
+  }
+}
+
+@keyframes dashboard-float-two {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(14px, -12px, 0) scale(1.03);
+  }
+}
+
+@media (max-width: 1120px) {
+  .dashboard-command,
+  .command-metrics,
+  .command-insights,
+  .recent-trade-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .command-badges {
+    justify-content: start;
+    max-width: none;
+  }
+
+  .recent-trade-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .dashboard-banner,
+  .dashboard-filter-heading,
+  .command-header,
+  .recent-trade-status-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .desk-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recent-trade-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-mode .page-shell {
+    width: min(100vw - 20px, 100%);
+  }
+}
