@@ -1,35 +1,43 @@
 # Trading Analytics & Workflow Automation Platform
 
-Workflow automation and analytics platform that validates journal data, synchronizes Notion with Supabase/PostgreSQL, and delivers recurring dashboard insights.
+I built this project to automate the workflow around my trading journal. What started as manually entering trades, checking data, updating daily results, and rebuilding performance summaries turned into a pipeline connecting **Notion, Supabase/PostgreSQL, and a custom analytics dashboard**.
+
+The system validates journal entries before they are written, keeps data synchronized across systems, handles duplicate records and recurring updates, and turns the resulting data into performance and process analytics.
 
 [![CI](https://github.com/Ruixing0328/trading-analytics-workflow-automation/actions/workflows/ci.yml/badge.svg)](https://github.com/Ruixing0328/trading-analytics-workflow-automation/actions/workflows/ci.yml)
+
 [View the synthetic demo](https://trading-analytics-workflow-automati.vercel.app/)
 
 ![Synthetic analytics dashboard showing workflow output, trends, and process breakdowns](docs/dashboard-demo.png)
 
-> **Synthetic demo data — illustrative results only.** Every public performance figure and dashboard record is generated for demonstration. No personal trading history or account data is included.
+> **Synthetic demo data — illustrative results only.** The public dashboard uses generated data and does not include my personal trading history, account data, or P&L.
 
-## One-minute overview
+## Overview
 
-Reviewing a journal manually meant repeatedly collecting entries, checking field consistency, reconciling daily results, and rebuilding the same performance summaries. This project turns that recurring operational workflow into a structured analytics system:
+The original workflow involved a lot of repetitive work: collecting journal entries, checking that fields were formatted correctly, updating daily results, and recreating the same performance summaries.
 
-**JSON/CSV entries → validation and normalization → Notion journal → Supabase/PostgreSQL synchronization → analytics API → dashboard and recurring scorecards**
+I wanted to automate that process while keeping the underlying data structured enough to analyze consistently.
 
-The trading journal is the use case. The broader engineering story is how a fragmented manual process became a repeatable data pipeline with API integrations, validation, duplicate controls, idempotent database updates, and decision-support reporting.
+The workflow now looks like this:
 
-## What the platform automates
+**JSON/CSV entries → validation → Notion → Supabase/PostgreSQL → analytics API → dashboard**
 
-- Validates and normalizes single or batch journal entries with Pydantic before any external write.
-- Creates and checks a canonical Notion database schema, ingests JSON/CSV data, and optionally attaches screenshots.
-- Handles duplicate journal records with explicit `reject`, `skip`, and `upsert` modes.
-- Creates or updates the matching Notion Daily Results page after a journal write.
-- Reads paginated Notion data, transforms nested properties into stable relational fields, and upserts batches into Supabase/PostgreSQL by Notion page ID.
-- Refreshes private data on demand and includes a bearer-protected reference endpoint for a daily `03:00 UTC` Vercel cron deployment.
-- Serves filtered KPIs, trends, weekly/monthly scorecards, and process breakdowns through a Python analytics API and a lightweight JavaScript dashboard.
+Although trading is the use case, most of the project is focused on **data validation, API integrations, database synchronization, workflow automation, and analytics**.
 
-There is no brokerage execution, strategy automation, signal generation, emailed report, scheduled weekly job, or AI/LLM component.
+## What it automates
 
-## Architecture and data flow
+- Validates and normalizes individual or batch journal entries with Pydantic before external writes.
+- Creates and checks the expected Notion database schema and supports JSON/CSV imports.
+- Handles duplicate records through explicit `reject`, `skip`, and `upsert` modes.
+- Creates or updates the matching Daily Results page after a journal entry is saved.
+- Reads paginated data from Notion and transforms nested properties into a relational format.
+- Synchronizes records to Supabase/PostgreSQL using repeatable page-ID-based upserts.
+- Supports on-demand synchronization and a protected daily cron workflow for private deployments.
+- Serves KPIs, trends, weekly/monthly summaries, and process breakdowns through a Python analytics API and lightweight JavaScript dashboard.
+
+The project does not execute trades, generate signals, or automate trading strategies.
+
+## Architecture
 
 ```mermaid
 flowchart LR
@@ -45,66 +53,99 @@ flowchart LR
     X["Deterministic synthetic dataset"] --> A
 ```
 
-The live path is designed for private deployment: Notion remains the journal system of record, and the Supabase table remains protected behind row-level security and server-side credentials. The hosted public path enters at the synthetic dataset and uses the same Python analytics functions without reading Notion or Supabase configuration.
+For my private setup, Notion acts as the main journal while Supabase/PostgreSQL stores a normalized version of the data for analytics.
 
-## Workflow triggers and repeatability
+The public demo follows a separate path. Generated data feeds into the same analytics layer without connecting to my Notion workspace or Supabase database, which keeps the demo public without exposing private data or credentials.
 
-| Trigger | Automated result |
+## How the workflow runs
+
+| Trigger | What happens |
 |---|---|
-| Single or batch journal write | Validate fields, apply duplicate policy, write to Notion, refresh Daily Results, and upsert the saved page to Supabase when configured |
-| Local dashboard refresh | Throttled Notion-to-Supabase synchronization in private live mode, followed by the latest analytics payload |
-| Private daily cron | Full paginated Notion read, transformation, batched upsert, and synchronization summary |
-| Public demo request | Regenerate the fixed synthetic dataset and return a filtered, shaped analytics payload |
+| Journal entry or batch import | Validate the data, apply the duplicate policy, write to Notion, update Daily Results, and sync the saved record to Supabase when configured |
+| Dashboard refresh | Refresh private data when running in live mode and return the latest analytics |
+| Private daily cron | Read paginated Notion data, transform it, batch-upsert it to Supabase, and return a sync summary |
+| Public demo request | Generate the deterministic synthetic dataset and return the same shaped analytics payload used by the dashboard |
 
-Notion duplicate prevention uses date, instrument, direction, entry time, and—when present—account type and label. Historical records without an entry timestamp cannot use the strongest duplicate key, so imports of those rows require additional review. Supabase synchronization is repeatable because records are upserted on their Notion page ID.
+Duplicate detection uses the trade date, instrument, direction, entry time, and, when available, account information.
 
-## Analytics and decision support
+Supabase synchronization is designed to be repeatable. Existing rows are updated using their Notion page ID rather than inserted again each time the pipeline runs.
 
-The dashboard calculates and presents:
+## Analytics
 
-- trade count, net and average P&L;
-- decisive-outcome win rate, gross profit/loss, and profit factor;
-- average realized R and average hold time;
-- win/loss streaks, cumulative equity, and maximum drawdown;
-- weekly and monthly scorecards;
-- results by instrument, time window, setup grade, emotional state, and weekday;
-- process and discipline flags such as forced trades, overtrading, chasing, and position-size adherence.
+The dashboard tracks both trading results and the process behind them.
 
-“Expectancy” is the observed average P&L per trade. Win rate excludes breakeven outcomes from its denominator. Maximum drawdown is measured from the running peak of cumulative P&L. Weekly and monthly views are calculated dynamically in the dashboard rather than produced by separate scheduled jobs.
+Current metrics include:
 
-## Integration and reliability details
+- trade count and total/average P&L;
+- win rate, gross profit/loss, and profit factor;
+- average realized R and hold time;
+- win/loss streaks;
+- cumulative equity and maximum drawdown;
+- weekly and monthly summaries;
+- performance by instrument, time window, setup grade, emotional state, and weekday;
+- process flags such as forced trades, overtrading, chasing, and position-size adherence.
 
-- **Notion API:** database creation, schema validation, pagination, rich-property mapping, file upload, page create/update, and retry handling.
-- **Supabase/PostgreSQL:** normalized relational storage, server-side REST access, batched writes, and page-ID-based upserts.
-- **Analytics API:** one shaped payload shared by the local dashboard and public serverless demo endpoint.
-- **Failure handling:** validation errors stop unsafe writes; schema mismatches are surfaced; batch imports can optionally continue after row-level failures; sync/API requests use bounded retries.
-- **Privacy boundary:** browser code never receives database credentials or connects directly to Supabase.
+For this project, **expectancy** is the observed average P&L per trade.
+
+Breakeven trades are excluded from the win-rate denominator, and maximum drawdown is measured from the running peak of cumulative P&L.
+
+Weekly and monthly views are calculated dynamically from the underlying data rather than generated through separate scheduled reporting jobs.
+
+## Integrations and reliability
+
+### Notion
+
+The Notion integration handles database creation, schema checks, pagination, property mapping, page creation and updates, file attachments, and retry handling.
+
+### Supabase / PostgreSQL
+
+Supabase serves as the relational analytics store. The synchronization layer converts Notion records into stable database fields and writes them in batches using page-ID-based upserts.
+
+### Analytics API
+
+Both the local dashboard and hosted synthetic demo use the same shaped analytics response instead of calculating metrics independently in the browser.
+
+### Validation and error handling
+
+Pydantic validation stops malformed records before an external write is attempted. Schema mismatches are surfaced instead of silently ignored, batch imports can continue after individual row failures when configured, and external API requests use bounded retry logic.
+
+Database credentials remain server-side. The browser never connects directly to Supabase or receives service-role credentials.
 
 ## Tech stack
 
-- Python 3.9+
-- Pydantic
-- Notion API
-- Supabase / PostgreSQL
-- Vanilla JavaScript, HTML, and CSS
-- Vercel Python Functions and cron reference configuration
-- pytest and GitHub Actions
+- **Python**
+- **Pydantic**
+- **Notion API**
+- **Supabase / PostgreSQL**
+- **Vanilla JavaScript, HTML, and CSS**
+- **Vercel Python Functions**
+- **Vercel cron configuration**
+- **pytest**
+- **GitHub Actions**
 
-## Synthetic public demo
+## Public demo
 
-The checked-in [`examples/demo_trades.json`](examples/demo_trades.json) contains 48 deterministic trades spanning approximately eight weeks. It uses only `Papertrade` and `Backtest` account types, synthetic IDs, neutral performance, and enough field variety to exercise filters, drawdowns, scorecards, process fields, and discipline flags.
+The public demo uses a deterministic set of **48 synthetic trades covering roughly eight weeks**.
 
-Regenerate it at any time:
+The generated data includes different instruments, time windows, outcomes, setup grades, process fields, and discipline flags so the dashboard can demonstrate its filters and analytics without using my real journal.
+
+Only `Papertrade` and `Backtest` account types are used, and the generated performance is intentionally kept neutral.
+
+The checked-in dataset is available at:
+
+[`examples/demo_trades.json`](examples/demo_trades.json)
+
+It can be regenerated with:
 
 ```bash
 python scripts/generate_demo_dataset.py
 ```
 
-Tests verify that the committed export exactly matches the generator, stays within neutral performance bounds, and contains no Notion URLs, screenshots, private identifiers, or real account labels.
+Tests verify that the committed file matches the generator and that the public dataset does not contain Notion URLs, screenshots, private identifiers, or real account labels.
 
-## Quickstart
+## Running it locally
 
-Create an environment and install the project:
+Create a virtual environment and install the project:
 
 ```bash
 python -m venv .venv
@@ -112,73 +153,120 @@ source .venv/bin/activate
 python -m pip install -e .
 ```
 
-Run the dashboard safely with no external credentials:
+Run the dashboard with synthetic demo data:
 
 ```bash
 python scripts/run_dashboard.py --demo
 ```
 
-Then open `http://127.0.0.1:8765`. With no `--demo`, no snapshot, and no Supabase credentials, the server also falls back safely to synthetic data.
+Then open:
 
-An explicit local-only snapshot can be supplied without placing it in the repository:
+```text
+http://127.0.0.1:8765
+```
+
+If the dashboard starts without `--demo`, a snapshot, or Supabase credentials, it safely falls back to synthetic data.
+
+A private local snapshot can also be supplied explicitly:
 
 ```bash
 python scripts/run_dashboard.py --snapshot /absolute/path/to/private_snapshot.json
 ```
 
-## Private integration configuration
+## Private Notion / Supabase setup
 
-Copy `.env.example` to `.env` and fill only the settings required for your private environment. `.env` and common export formats are ignored by Git.
+Copy `.env.example` to `.env` and fill in the values required for the private environment:
 
 ```bash
 cp .env.example .env
 ```
 
-Key server-only variables are `NOTION_TOKEN`, `NOTION_TRADE_JOURNAL_DATA_SOURCE_ID`, `SUPABASE_URL`, and `SUPABASE_SERVICE_ROLE_KEY`. `CRON_SECRET` protects the optional private synchronization endpoint. Never expose the service-role key to browser code.
+Main server-side variables:
 
-Representative commands:
+```text
+NOTION_TOKEN
+NOTION_TRADE_JOURNAL_DATA_SOURCE_ID
+SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY
+CRON_SECRET
+```
+
+`.env` and common data/export formats are excluded from Git.
+
+The Supabase service-role key should only be used server-side and should never be exposed to browser code.
+
+Some of the main CLI workflows are:
 
 ```bash
-# Validate a payload and preview its Notion request without writing
+# Validate a trade and preview the Notion request without writing
 python scripts/push_trade.py examples/sample_trade.json --dry-run
 
 # Import JSON or CSV with an explicit duplicate policy
 python scripts/import_batch.py examples/sample_batch.json --duplicate-mode skip
 
-# Run a full private Notion-to-Supabase synchronization
+# Run a complete private Notion-to-Supabase synchronization
 python scripts/sync_supabase.py
 ```
 
-Additional commands create the canonical Notion database and attach a screenshot to an existing journal page. The SQL schema in `supabase/trade_journal_trades.sql` is private-deployment material: it enables row-level security and intentionally provides no anonymous browser grants.
+The project also includes commands for creating the expected Notion database and attaching screenshots to existing journal pages.
 
-The public `vercel.json` powers the dashboard from synthetic data and schedules no live synchronization. The protected sync handler remains dormant without server-only secrets. `deployment/vercel.private-cron.example.json` preserves the daily private-deployment schedule as reference material; it should only be used with server-side secrets configured in a private Vercel project.
+The SQL schema in `supabase/trade_journal_trades.sql` enables row-level security and provides no anonymous browser access.
+
+The public `vercel.json` runs only the synthetic dashboard and does not schedule synchronization against a live journal.
+
+An example private cron configuration is available at:
+
+`deployment/vercel.private-cron.example.json`
 
 ## Testing
 
+Run the Python test suite:
+
 ```bash
 python -m pytest
+```
+
+Check the dashboard JavaScript:
+
+```bash
 node --check dashboard/dashboard.js
 ```
 
-The focused suite covers normalization and validation, Notion mappings and retries, schema checks, duplicate modes, Daily Results generation, Supabase transformations/upserts, dashboard metrics and source modes, synthetic-data safety, serverless API behavior, and public asset boundaries. GitHub Actions runs the Python tests and JavaScript syntax check on pushes and pull requests.
+The suite covers:
 
-## Repository map
+- normalization and validation;
+- Notion mappings, retries, and schema checks;
+- duplicate handling;
+- Daily Results generation;
+- Supabase transformations and upserts;
+- dashboard metrics and data-source modes;
+- synthetic-data safety;
+- serverless API behavior;
+- public/private data boundaries.
+
+GitHub Actions runs the Python tests and JavaScript syntax check on pushes and pull requests.
+
+## Project structure
 
 ```text
-api/                         Synthetic dashboard API and private sync reference
-dashboard/                   Recruiter-facing analytics UI
-deployment/                  Private cron reference configuration
-examples/                    Synthetic input and generated demo data
-scripts/                     Operational CLI entry points
-src/notion_trade_journal/    Validation, integrations, pipeline, and analytics logic
-supabase/                    Protected relational schema
-tests/                       Focused reliability and public-safety tests
+api/                         Dashboard API and private sync endpoint
+dashboard/                   Analytics dashboard
+deployment/                  Private cron example
+examples/                    Synthetic sample data
+scripts/                     CLI and operational scripts
+src/notion_trade_journal/    Validation, integrations, synchronization, and analytics
+supabase/                    PostgreSQL schema
+tests/                       Automated tests
 ```
 
-## Privacy model, limitations, and disclaimer
+## Notes
 
-- The public demo never queries Notion or Supabase and contains no real trading records, account balances, screenshots, or personal P&L.
-- Private deployments must keep the Supabase table behind row-level security and use service-role credentials only on the server.
-- Screenshot URLs and raw Notion page payloads are retained in the private operational schema because they are part of the real synchronization implementation; they are not returned by the public demo.
-- The supported instrument, field, and category enums reflect this journal implementation rather than a general-purpose trading data standard.
-- The project demonstrates data analytics and workflow automation. It does not provide investment advice, trading signals, or evidence of investment performance.
+The public version of this project is intentionally separated from my live journal data. It does not query my Notion workspace or Supabase database and does not contain real trades, account balances, screenshots, or personal P&L.
+
+A private deployment requires row-level security on the Supabase table and server-side handling of service-role credentials.
+
+Some fields in the underlying schema, such as screenshot URLs and raw Notion metadata, exist because they are useful in the private workflow. They are not exposed through the public demo.
+
+The supported instruments, categories, and journal fields reflect the workflow I built rather than a universal trading-journal schema.
+
+This project is meant to demonstrate the **data pipeline, analytics, and workflow automation** behind the journal. It is not a trading system, does not generate trading signals, and is not investment advice.
