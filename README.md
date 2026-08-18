@@ -1,6 +1,6 @@
 # Trading Analytics & Workflow Automation Platform
 
-I built this project to automate the workflow around my trading journal. What started as manually entering trades, checking data, updating daily results, and rebuilding performance summaries turned into a pipeline connecting **Notion, Supabase/PostgreSQL, and a custom analytics dashboard**.
+I built this project to automate a manual trading-journal workflow and make the underlying data easier to analyze consistently. What started as manually entering trades, checking data, updating daily results, and rebuilding performance summaries became a pipeline connecting Notion, Supabase/PostgreSQL, and a custom analytics dashboard.
 
 The system validates journal entries before they are written, keeps data synchronized across systems, handles duplicate records and recurring updates, and turns the resulting data into performance and process analytics.
 
